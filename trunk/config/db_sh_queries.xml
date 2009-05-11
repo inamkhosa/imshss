@@ -1,0 +1,607 @@
+<DiameterServerDatabaseQueryConfig>
+
+    <QueryInfo>
+        <QueryID>1</QueryID>
+        <QueryName>
+            UDR Aliases Repo Data By PUI
+        </QueryName>
+        <QueryString> 
+            select 
+            	Service_Data, Seq_no, Service_Indication  
+            from  
+            	Repository_Data RD,
+            	PublicUserIdentities PUI 
+            where 
+            	PUI.Repo_ID = RD.Repo_ID AND 
+            	RD.Service_Indication = %c%s%c AND 
+            	PUI.IMPU_ID=%c%s%c ;
+        </QueryString>
+    </QueryInfo>
+
+     <QueryInfo>
+        <QueryID>2</QueryID>
+        <QueryName>
+            UDR Charging Info By PUI
+        </QueryName>
+        <QueryString>
+            select 
+            	Chrg_Info_Id, 
+        		Chrg_Collection_FN_Name,
+        		Primary_Chrg_FN_Name,
+        		Secondary_Chrg_FN_Name,
+        		Primary_Chrg_Event_FN_Name,
+        		Secondary_Chrg_Event_FN_Name
+            from 
+            	Charging_Function_Info
+            where 
+            	IMPU_ID = %c%s%c;
+        </QueryString>
+    </QueryInfo>
+
+
+     <QueryInfo>
+        <QueryID>3</QueryID>
+        <QueryName>
+            UDR DSAI by PSI
+        </QueryName>
+        <QueryString>
+            select 
+            	DSAI_Value, DSAI_Tag 
+            from 
+            	DSAI, 
+            	IMS_Data_Extension IDE, 
+            	Sh_IMS_Data SIM, 
+            	PublicUserIdentities PUI, 
+            	PSI_IMPU_Mapping PIM
+            where 
+            	DSAI.TDSI_ID = IDE.TDSI_ID AND 
+            	IDE.data_extension_id = SIM.data_extension_id AND 
+            	SIM.IMPU_ID = PUI.IMPU_ID AND 
+            	PUI.IMPU_ID = PIM.IMPU_ID AND 
+                DSAI_Tag=%c%s%c AND
+            	PIM.PSI_ID = %c%s%c; 
+            	
+        </QueryString>
+    </QueryInfo>
+
+    <QueryInfo>
+        <QueryID>4</QueryID>
+        <QueryName>
+            UDR DSAI by PUI
+        </QueryName>
+        <QueryString>
+            select 
+            	DSAI_Value, 
+            	DSAI_Tag 
+            from 
+            	DSAI, 
+            	IMS_Data_Extension IDE, 
+            	Sh_IMS_Data SIM, 
+            	PublicUserIdentities PUI, 
+            	PSI_IMPU_Mapping PIM
+            where 
+            	DSAI.TDSI_ID = IDE.TDSI_ID AND 
+            	IDE.data_extension_id = SIM.data_extension_id AND 
+            	SIM.IMPU_ID = PUI.IMPU_ID AND 
+            	DSAI_Tag=%c%s%c AND 
+            	PUI.IMPU_ID = %c%s%c;
+        </QueryString>
+    </QueryInfo>
+
+     <QueryInfo>
+        <QueryID>5</QueryID>
+        <QueryName>
+            UDR IFC by PSI
+        </QueryName>
+        <QueryString>
+            select 
+            	Priority, AppServer_Name, Default_Handling, Service_Info, Reg_Status,
+            	SIP_Method, SIP_Header, Request_URI, Session_Case, SPT.Group, 
+            	ConditionNegated, SessionDesc_Content, SessionDesc_Line, Reg_Type, ConjuctiveNormalForm
+            from
+            	Application_Server APS,
+            	TriggerPoint TP,
+            	ServicePointTrigger SPT,
+            	InitialFilterCriteria IFC,
+            	IFC_ServiceProfile_Mapping ISM,
+            	ServiceProfiles SP,
+            	SVP2IMPU_Mapping SIM,
+            	PublicUserIdentities PUI,
+            	PSI_IMPU_Mapping PIM
+            where
+            	APS.AppServer_ID = IFC.AppServer_ID AND
+            	TP.Trigger_Point_ID = SPT.TriggerPoint_ID AND
+            	TP.Trigger_Point_ID = IFC.TriggerPoint_ID AND
+            	IFC.IFC_ID = ISM.IFC_ID AND
+            	ISM.ServiceProfile_ID = SP.ServiceProfile_ID AND
+            	SP.ServiceProfile_ID = SIM.ServiceProfileID AND
+            	SIM.IMPU = PUI.IMPU_ID AND
+            	PUI.IMPU_ID = PIM.IMPU_ID AND
+            	PIM.PSI_ID = %c%s%c AND
+            	AppServer_Name = %c%s%c;
+        </QueryString>
+    </QueryInfo>
+
+
+     <QueryInfo>
+        <QueryID>6</QueryID>
+        <QueryName>
+            UDR IFC by PUI
+        </QueryName>
+        <QueryString>
+            select 
+            	Priority, AppServer_Name, Default_Handling, Service_Info, Reg_Status,
+            	SIP_Method, SIP_Header, Request_URI, Session_Case, SPT.Group, 
+            	ConditionNegated, SessionDesc_Content, SessionDesc_Line, Reg_Type, ConjuctiveNormalForm
+            from
+            	Application_Server APS,
+            	TriggerPoint TP,
+            	ServicePointTrigger SPT,
+            	InitialFilterCriteria IFC,
+            	IFC_ServiceProfile_Mapping ISM,
+            	ServiceProfiles SP,
+            	SVP2IMPU_Mapping SIM, 
+            	PublicUserIdentities PUI
+            where
+            	APS.AppServer_ID = IFC.AppServer_ID AND
+            	TP.Trigger_Point_ID = SPT.TriggerPoint_ID AND
+            	TP.Trigger_Point_ID = IFC.TriggerPoint_ID AND
+            	IFC.IFC_ID = ISM.IFC_ID AND
+            	ISM.ServiceProfile_ID = SP.ServiceProfile_ID AND
+            	SP.ServiceProfile_ID = SIM.ServiceProfileID AND
+            	PUI.IMPU_ID = SIM.IMPU AND
+            	IMPU = %c%s%c AND
+            	AppServer_Name = %c%s%c;
+        </QueryString>
+    </QueryInfo>
+
+    <QueryInfo>
+        <QueryID>7</QueryID>
+        <QueryName>
+            UDR IMS User State
+        </QueryName>
+        <QueryString>
+            select 
+                ims_user_state 
+            from 
+                Sh_IMS_Data 
+            where 
+                IMPU_ID = %c%s%c;
+        </QueryString>
+    </QueryInfo>
+
+     <QueryInfo>
+        <QueryID>8</QueryID>
+        <QueryName>
+            UDR PSI Activation by PSI
+        </QueryName>
+        <QueryString>
+            select
+             	IDE.PSI_Activation
+            from 
+            	IMS_Data_Extension IDE, Sh_IMS_Data SIM, PublicUserIdentities PUI, PSI_IMPU_Mapping PIM
+            where 
+            	IDE.data_extension_id = SIM.data_extension_id AND 
+            	SIM.IMPU_ID = PUI.IMPU_ID AND 
+            	PUI.IMPU_ID = PIM.IMPU_ID	AND 
+            	PIM.PSI_ID = %c%s%c;
+        </QueryString>
+    </QueryInfo>
+
+
+     <QueryInfo>
+        <QueryID>9</QueryID>
+        <QueryName>
+            UDR Repo Data By PUI
+        </QueryName>
+        <QueryString>
+            select 
+            	Service_Data, Seq_no, Service_Indication  
+            from  
+            	Repository_Data RD,PublicUserIdentities PUI
+            where 
+            	PUI.Repo_ID = RD.Repo_ID AND 
+            	RD.Service_Indication = %c%s%c AND 
+            	PUI.IMPU_ID=%c%s%c; 
+        </QueryString>
+    </QueryInfo>
+
+
+    <QueryInfo>
+        <QueryID>10</QueryID>
+        <QueryName>
+            UDR SCSCF Name By PSI
+        </QueryName>
+        <QueryString>
+            select 
+            	SID.SCSCF_Name 
+            from 
+            	PublicUserIdentities PUI, 
+            	Sh_IMS_Data SID, 
+            	PSI_IMPU_Mapping PIM
+            where 
+            	PUI.IMPU_ID = SID.IMPU_ID AND 
+            	PUI.IMPU_ID= PIM.IMPU_ID AND
+            	PIM.PSI_ID = %c%s%c;
+        </QueryString>
+    </QueryInfo>
+
+     <QueryInfo>
+        <QueryID>11</QueryID>
+        <QueryName>
+            UDR SCSCF Name By PUI
+        </QueryName>
+        <QueryString>
+            select 
+            	SID.SCSCF_Name 
+            from 
+            	PublicUserIdentities PUI, 
+            	Sh_IMS_Data SID
+            where 
+            	PUI.IMPU_ID = SID.IMPU_ID AND 
+            	PUI.IMPU_ID=%c%s%c;
+        </QueryString>
+    </QueryInfo>
+
+    <QueryInfo>
+        <QueryID>12</QueryID>
+        <QueryName>
+           PUR Update Aliases Repo Data
+        </QueryName>
+        <QueryString>
+           update 
+            	Repository_Data
+            set
+            	Service_Data = %c%s%c, Seq_no = %d, Service_Indication  = %c%s%c
+            where
+            	 Repo_ID = %d;
+        </QueryString>
+    </QueryInfo>
+
+     <QueryInfo>
+        <QueryID>13</QueryID>
+        <QueryName>
+           PUR Get DataExtensionID by PSI for PSI_Activation
+        </QueryName>
+        <QueryString>
+            select
+             	IDE.data_extension_id
+            from 
+            	IMS_Data_Extension IDE, Sh_IMS_Data SIM, PublicUserIdentities PUI, PSI_IMPU_Mapping PIM
+            where 
+            	IDE.data_extension_id = SIM.data_extension_id AND 
+            	SIM.IMPU_ID = PUI.IMPU_ID AND 
+            	PUI.IMPU_ID = PIM.IMPU_ID	AND 
+            	PIM.PSI_ID = %c%s%c;
+        </QueryString>
+    </QueryInfo>
+
+     <QueryInfo>
+        <QueryID>14</QueryID>
+        <QueryName>
+           PUR Get RepoID by PUI and ServiceIndication
+        </QueryName>
+        <QueryString>
+             select 
+            	RD.Repo_ID ,Service_Indication,Service_Data,Seq_No 
+            from  
+            	Repository_Data RD
+            where 
+            	RD.IMPU_ID =  %c%s%c AND
+                RD.Service_Indication = %c%s%c;
+        </QueryString>
+    </QueryInfo>
+
+     <QueryInfo>
+        <QueryID>15</QueryID>
+        <QueryName>
+           PUR TDSI_ID and DSAI Info by PSI
+        </QueryName>
+        <QueryString>
+        select 
+		DSAI.TDSI_ID,DSAI.DSAI_Value,DSAI.DSAI_Tag
+            from 
+            	DSAI, 
+            	IMS_Data_Extension IDE, 
+            	Sh_IMS_Data SIM, 
+            	PublicUserIdentities PUI, 
+            	PSI_IMPU_Mapping PIM
+            where 
+		PUI.IMPU_ID = PIM.IMPU_ID  AND
+            	DSAI.TDSI_ID = IDE.TDSI_ID AND 
+            	IDE.data_extension_id = SIM.data_extension_id AND 
+            	SIM.IMPU_ID = PUI.IMPU_ID AND             	
+            	PIM.PSI_ID = %c%s%c;
+          
+        </QueryString>
+    </QueryInfo>
+
+     <QueryInfo>
+        <QueryID>16</QueryID>
+        <QueryName>
+            PUR TDSI_ID and DSAI Info by  PUI
+        </QueryName>
+        <QueryString>
+            select 
+            	DSAI.TDSI_ID,DSAI.DSAI_Value,DSAI.DSAI_Tag
+            from 
+            	DSAI, 
+            	IMS_Data_Extension IDE, 
+            	Sh_IMS_Data SIM, 
+            	PublicUserIdentities PUI
+            where 
+            	DSAI.TDSI_ID = IDE.TDSI_ID AND 
+            	IDE.data_extension_id = SIM.data_extension_id AND 
+            	SIM.IMPU_ID = PUI.IMPU_ID AND             	
+            	PUI.IMPU_ID = %c%s%c;
+          
+        </QueryString>
+    </QueryInfo>
+
+     <QueryInfo>
+        <QueryID>17</QueryID>
+        <QueryName>
+            PUR Get RepoID by PSI and Service Indication
+        </QueryName>
+        <QueryString>
+           select 
+            	    RD.Repo_ID ,Service_Indication,Service_Data,Seq_No   
+           from  
+                	Repository_Data RD,
+                	PSI_IMPU_Mapping PIM
+            where 
+            	    PIM.PSI_ID = %c%s%c AND
+    		        PIM.IMPU_ID = RD.IMPU_ID AND
+                	RD.Service_Indication = %c%s%c;
+        </QueryString>
+    </QueryInfo>
+
+     <QueryInfo>
+        <QueryID>18</QueryID>
+        <QueryName>
+           PUR update DSAI by TDSI_ID
+        </QueryName>
+        <QueryString>
+          update
+            DSAI
+        set
+                DSAI_Value = %d, DSAI_Tag = %c%s%c
+        where
+            TDSI_ID = %d;
+        </QueryString>
+    </QueryInfo>
+
+     <QueryInfo>
+        <QueryID>19</QueryID>
+        <QueryName>
+           PUR Update PSI_Activation by dataExtensionID
+        </QueryName>
+        <QueryString>
+            update
+        	IMS_Data_Extension
+        set
+        	PSI_Activation = %d
+        where
+        	Data_Extension_ID = %d;
+        </QueryString>
+    </QueryInfo>
+
+    <QueryInfo>
+       <QueryID>20</QueryID>
+       <QueryName>
+          Sh Get Identity Type
+       </QueryName>
+       <QueryString>
+        select Ident_type 
+        from Identity_Type_Info 
+        where Identity = %c%s%c;
+       </QueryString>
+   </QueryInfo>
+
+   <QueryInfo>
+       <QueryID>21</QueryID>
+       <QueryName>
+          Sh Get AppServerID From AppServerAddress
+       </QueryName>
+       <QueryString>
+        select 
+            AppServer_ID 
+        from 
+            Application_Server
+        where 
+            AppServer_Address = %c%s%c
+       </QueryString>
+   </QueryInfo>
+
+
+   <QueryInfo>
+       <QueryID>22</QueryID>
+       <QueryName>
+          Sh Get AS Permissions By AS ID and Data Ref
+       </QueryName>
+       <QueryString>
+        select 
+	        Allow_UDR, Allow_PUR, Allow_PNR,Allow_SNR
+        from 
+        	ApplicationServerPermList
+        where
+        	AppServer_ID = %d AND
+        	Data_Reference=%d
+       </QueryString>
+   </QueryInfo>
+
+
+   <QueryInfo>
+       <QueryID>23</QueryID>
+       <QueryName>
+          UDR Get Charging Info By PSI
+       </QueryName>
+       <QueryString>
+        select 
+            	Chrg_Info_Id, 
+        		Chrg_Collection_FN_Name,
+        		Primary_Chrg_FN_Name,
+        		Secondary_Chrg_FN_Name,
+        		Primary_Chrg_Event_FN_Name,
+        		Secondary_Chrg_Event_FN_Name
+        from 
+            	Charging_Function_Info CFI,
+		        PSI_IMPU_Mapping PIM
+        where 
+            	CFI.IMPU_ID = PIM.IMPU_ID AND
+		        PIM.PSI_ID = %c%s%c;
+       </QueryString>
+   </QueryInfo>
+
+
+   <QueryInfo>
+       <QueryID>24</QueryID>
+       <QueryName>
+          UDR Get Repo Data By PSI
+       </QueryName>
+       <QueryString>
+          select 
+            	Service_Data, Seq_no, Service_Indication  
+            from  
+            	Repository_Data RD,PublicServiceIdentity PSI
+            where 
+            	PSI.Repo_ID = RD.Repo_ID AND 
+            	RD.Service_Indication = %c%s%c AND 
+            	PSI.PSI_ID=%c%s%c;
+       </QueryString>
+   </QueryInfo>
+
+   <QueryInfo>
+       <QueryID>25</QueryID>
+       <QueryName>
+          Sh Get Private Id for Public ID
+       </QueryName>
+       <QueryString>
+            select 
+            	IMPI_ID
+            from
+            	PrivateUID_PublicUID_Mapping
+            where 
+            	IMPU_ID=%c%s%c; 
+       </QueryString>
+   </QueryInfo>
+
+   <QueryInfo>
+       <QueryID>26</QueryID>
+       <QueryName>
+         Sh Get Public Id for Private ID
+       </QueryName>
+       <QueryString>
+            select 
+            	IMPU_ID
+            from
+            	PrivateUID_PublicUID_Mapping
+            where 
+            	IMPI_ID=%c%s%c; 
+       </QueryString>
+   </QueryInfo>
+
+   <QueryInfo>
+       <QueryID>27</QueryID>
+       <QueryName>
+          Sh Get Registration Status for PUI
+       </QueryName>
+       <QueryString>
+          select 
+        	Reg_Status
+        from
+        	PublicUserIdentities
+        where
+        	IMPU_ID = %c%s%c;
+       </QueryString>
+   </QueryInfo>
+
+   <QueryInfo>
+       <QueryID>28</QueryID>
+       <QueryName>
+          Sh Get Barring Indication for  PUI
+       </QueryName>
+       <QueryString>
+            select 
+                BarringIndication
+            from
+                PublicUserIdentities
+            where
+                IMPU_ID = %c%s%c;
+       </QueryString>
+   </QueryInfo>
+
+
+     <QueryInfo>
+       <QueryID>29</QueryID>
+       <QueryName>
+          Sh Delete RepoData Rec By PUI and Service Indic
+       </QueryName>
+       <QueryString>
+            DELETE
+            from 
+                Repository_Data 
+            where 
+                Service_Indication = %c%s%s
+                AND IMPU_ID = %c%s%c;
+       </QueryString>
+   </QueryInfo>
+
+
+     <QueryInfo>
+       <QueryID>30</QueryID>
+       <QueryName>
+          Sh Insert Record Into RepoData
+       </QueryName>
+       <QueryString>
+            insert into 
+                Repository_Data(Service_Indication, Service_Data, Seq_no, IMPU_ID)
+            values(%c%s%c, %c%s%c, %d, %c%s%c);
+       </QueryString>
+   </QueryInfo>
+
+    <QueryInfo>
+       <QueryID>31</QueryID>
+       <QueryName>
+          Sh Delete RepoData Rec By RepoId
+       </QueryName>
+       <QueryString>
+            DELETE
+            from 
+                Repository_Data 
+            where 
+                Repo_ID = %d;
+       </QueryString>
+   </QueryInfo>
+
+   <QueryInfo>
+	<QueryID>32</QueryID>
+       <QueryName>
+         Sh Get PSI Id for Public ID
+       </QueryName>
+       <QueryString>
+            select 
+            	PSI_ID
+            from
+            	PSI_IMPU_Mapping
+            where 
+            	IMPU_ID=%c%s%c; 
+       </QueryString>
+   </QueryInfo>
+
+   <QueryInfo>   
+	<QueryID>33</QueryID>
+       <QueryName>
+         Sh Get Public Id for PSI ID
+       </QueryName>
+       <QueryString>
+            select 
+            	IMPU_ID
+            from
+            	PSI_IMPU_Mapping
+            where 
+            	PSI_ID=%c%s%c; 
+       </QueryString>
+   </QueryInfo>
+
+</DiameterServerDatabaseQueryConfig>

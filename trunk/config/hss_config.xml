@@ -1,0 +1,276 @@
+ <DiameterServerConfiguration>
+
+<HostName>hss.advanced-ims.test</HostName>
+
+<HostIPAddress>127.0.0.1</HostIPAddress>
+
+<HostRealm>advanced-ims.test</HostRealm>
+
+<TcTimerVal>1234</TcTimerVal>
+
+<ProductName>Home Subscriber Server</ProductName>
+
+<VendorID>776655</VendorID>
+
+<LogFileName>/root/diamlog.txt</LogFileName>
+
+<LogLevel>31</LogLevel>
+
+<Listeners>
+
+    <ListenerInfo>
+           <TransportType>TCP</TransportType>
+           <TransportDetails>
+               <IPAddress>192.168.0.125</IPAddress>
+               <Port>3868</Port>
+               <FQDN>hss.advanced-ims.test</FQDN>
+               <IpAddrType>IPV4</IpAddrType>
+           </TransportDetails>
+    </ListenerInfo>
+
+</Listeners>
+
+
+<SNMPConfig>
+
+    <ListenerPort>7779</ListenerPort>
+    <ListenerIP>127.0.0.1</ListenerIP>
+    <TrapPort>3222</TrapPort>
+    <TrapIP>127.0.0.1</TrapIP>
+
+    <ModuleInfo>
+        <ModuleName>hss_oamps</ModuleName>
+        <ModuleFilePath>/AMPS_Modules/</ModuleFilePath>
+        <IsPathAbsolute>no</IsPathAbsolute>
+        <LoadModule>yes</LoadModule>
+    </ModuleInfo>
+
+</SNMPConfig>
+
+<MiscModules>
+
+    <!--> Add any module infos here which are common to all applications in current server -->
+
+</MiscModules>
+
+<DatabaseModuleConfig>
+
+   <ModuleInfo>
+        <ModuleName>hss_dbmodule</ModuleName>
+        <ModuleFilePath>/DBModule/</ModuleFilePath>
+        <IsPathAbsolute>no</IsPathAbsolute>
+        <LoadModule>yes</LoadModule>
+     </ModuleInfo>
+
+     <DBMS_Configuration>
+         <HostName>127.0.0.1</HostName>
+         <UserName>root</UserName>
+         <Password>nopass</Password>
+         <DatabaseName>adv_hss</DatabaseName>
+     </DBMS_Configuration>
+
+</DatabaseModuleConfig>
+
+<DiameterApplication>
+
+    <ApplicationName>Sh</ApplicationName>
+
+    <AppModules>
+        <ModuleInfo>
+            <ModuleName>sh_app</ModuleName>
+            <ModuleFilePath>/AMPS_Modules/</ModuleFilePath>
+            <IsPathAbsolute>no</IsPathAbsolute>
+            <LoadModule>yes</LoadModule>
+         </ModuleInfo>
+    </AppModules>
+
+    <MyDummySh-Params>
+        <param1>hello world</param1>
+        <param2>bye bye world</param2>
+    </MyDummySh-Params>
+
+    <DiameterStackParams>
+
+        <ApplicationInfo>
+            <ApplicationID>16777217</ApplicationID>
+            <ApplicationType>Authorization</ApplicationType>
+            <VendorID>10415</VendorID>
+        </ApplicationInfo>
+
+        <DictionaryFile>
+            <FilePathAndName>sh_dictionary.xml</FilePathAndName>
+            <IsPathAbsolute>no</IsPathAbsolute>
+        </DictionaryFile>
+
+        <PeerTableEntries>
+
+            <PeerInfo>
+                <HostIdentity>sh-client</HostIdentity>
+                <Role>responder</Role>
+                <IPAddress>127.0.0.1</IPAddress>
+                <Port>3895</Port>
+                <WatchDogTimerDelay>30</WatchDogTimerDelay>
+            </PeerInfo>
+
+	    <PeerInfo>
+                <HostIdentity>sh-client-2</HostIdentity>
+                <Role>responder</Role>
+                <IPAddress>127.0.0.1</IPAddress>
+                <Port>3896</Port>
+                <WatchDogTimerDelay>30</WatchDogTimerDelay>
+            </PeerInfo>
+
+	
+	    <PeerInfo>
+                <HostIdentity>sh-client-3</HostIdentity>
+                <Role>responder</Role>
+                <IPAddress>127.0.0.1</IPAddress>
+                <Port>3897</Port>
+                <WatchDogTimerDelay>30</WatchDogTimerDelay>
+            </PeerInfo>
+
+        </PeerTableEntries>
+
+        <RealmTableEntries>
+
+            <RealmInfo>
+                <RealmName>www.example.com</RealmName>
+                <ApplicationID>1200</ApplicationID>
+                <LocalAction>local</LocalAction>
+            </RealmInfo>
+
+            <RealmInfo>
+                <RealmName>seagull</RealmName>
+                <ApplicationID>16777217</ApplicationID>
+                <LocalAction>local</LocalAction>
+            </RealmInfo>
+
+        </RealmTableEntries>
+
+    </DiameterStackParams>
+
+    
+</DiameterApplication>
+
+<DiameterApplication>
+
+    <ApplicationName>Cx</ApplicationName>
+
+    <AppModules>
+
+        <ModuleInfo>
+            <ModuleName>cxdx_app</ModuleName>
+            <ModuleFilePath>/AMPS_Modules/</ModuleFilePath>
+            <IsPathAbsolute>no</IsPathAbsolute>
+	    <LoadModule>yes</LoadModule>
+        </ModuleInfo>
+
+    </AppModules>
+
+    <MyDummyCx-Params>
+        <param1>hello world from Cx MOD</param1>
+        <param2>bye bye world sadly from CX MOD</param2>
+    </MyDummyCx-Params>
+
+    <DiameterStackParams>
+
+        <ApplicationInfo>
+            <ApplicationID>16777216</ApplicationID>
+            <ApplicationType>Authorization</ApplicationType>
+            <VendorID>10415</VendorID>
+        </ApplicationInfo>
+
+    <DictionaryFile>
+        <FilePathAndName>cx_dictionary.xml</FilePathAndName>
+        <IsPathAbsolute>no</IsPathAbsolute>
+    </DictionaryFile>
+
+
+    <PeerTableEntries>
+
+        <PeerInfo>
+            <HostIdentity>seagull.ims.hpintelco.org</HostIdentity>
+            <Role>responder</Role>
+            <IPAddress>127.0.0.1</IPAddress>
+            <Port>3873</Port>
+            <WatchDogSupport>no</WatchDogSupport>
+            <WatchDogTimerDelay>30</WatchDogTimerDelay>
+        </PeerInfo>
+<!--        
+        <PeerInfo>
+            <HostIdentity>seagull1.ims.hpintelco.org</HostIdentity>
+            <Role>initiator</Role>
+            <IPAddress>127.0.0.1</IPAddress>
+            <Port>3873</Port>
+            <WatchDogSupport>no</WatchDogSupport>
+            <WatchDogTimerDelay>30</WatchDogTimerDelay>
+        </PeerInfo>
+-->
+        <PeerInfo>
+            <HostIdentity>icscf.open-ims.test</HostIdentity>
+            <Role>responder</Role>
+            <IPAddress>127.0.0.1</IPAddress>
+            <Port>3870</Port>
+            <WatchDogTimerDelay>30</WatchDogTimerDelay>
+        </PeerInfo>
+
+        <PeerInfo>
+            <HostIdentity>scscf.open-ims.test</HostIdentity>
+            <Role>responder</Role>
+            <IPAddress>127.0.0.1</IPAddress>
+            <Port>3869</Port>
+            <WatchDogTimerDelay>30</WatchDogTimerDelay>
+        </PeerInfo>
+
+        <PeerInfo>
+            <HostIdentity>hss1.open-ims.test</HostIdentity>
+            <Role>responder</Role>
+            <IPAddress>127.0.0.1</IPAddress>
+            <Port>3871</Port>
+            <WatchDogSupport>no</WatchDogSupport>
+            <WatchDogTimerDelay>30</WatchDogTimerDelay>
+        </PeerInfo>
+<!--
+        <PeerInfo>
+            <HostIdentity>hss2.open-ims.test</HostIdentity>
+            <Role>initiator</Role>
+            <IPAddress>127.0.0.1</IPAddress>
+            <Port>3872</Port>
+            <WatchDogSupport>no</WatchDogSupport>
+            <WatchDogTimerDelay>30</WatchDogTimerDelay>
+        </PeerInfo>
+-->
+    </PeerTableEntries>
+
+    <RealmTableEntries>
+
+        <RealmInfo>
+            <RealmName>seagull</RealmName>
+            <ApplicationID>16777216</ApplicationID>
+            <LocalAction>proxy</LocalAction>
+            <Server>
+                <Priority>1</Priority>
+                <ServerID>hss1.open-ims.test</ServerID>
+            </Server>
+            <Server>
+                <Priority>2</Priority>
+                <ServerID>hss2.open-ims.test</ServerID>
+            </Server>            
+        </RealmInfo>
+
+        <RealmInfo>
+            <RealmName>open-ims.test</RealmName>
+            <ApplicationID>16777216</ApplicationID>
+            <LocalAction>local</LocalAction>
+        </RealmInfo>
+
+    </RealmTableEntries>
+
+    
+    </DiameterStackParams>
+
+    
+</DiameterApplication>
+
+
+</DiameterServerConfiguration>
