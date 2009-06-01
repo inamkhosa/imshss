@@ -4,9 +4,9 @@ h_sources = cxdx_db.h db_cxdx_mar.h dbmodule.h db_sh_udr.h cxdx_userprofile.h db
 
 c_sources = cxdx_db.c db_cxdx_lir.c db_cxdx_sar.c dbmodule.c db_sh_udr.c cxdx_userprofile.c db_cxdx_mar.c db_cxdx_uar.c db_sh_pur.c
 
-INCLUDES = -I. -I$(top_srcdir)/src -I$(top_srcdir)/src/sh_app -I$(top_srcdir)/src/oamps_module $(LIBAMPS_DEPS_CFLAGS) $(LIBXML_DEPS_CFLAGS) $(DIAMETER_DEPS_CFLAGS) $(DIAMAPPCOMMON_DEPS_CFLAGS)
+INCLUDES = -I. -I$(top_srcdir)/src -I$(top_srcdir)/src/sh_app -I$(top_srcdir)/src/oamps_module -I$(top_srcdir)/include/amps -I$(top_srcdir)/include/libxml2 $(DIAMETER_DEPS_CFLAGS) $(DIAMAPPCOMMON_DEPS_CFLAGS)
 
-LDADD = $(DIAMETER_DEPS_LIBS) $(DIAMAPPCOMMON_DEPS_LIBS) $(LIBXML_DEPS_LIBS)
+LDADD = $(DIAMETER_DEPS_LIBS) $(DIAMAPPCOMMON_DEPS_LIBS) -L$(top_srcdir)/lib -lamps -lxml2
 
 AM_CFLAGS = -DDATADIR=\"$(datadir)/@PACKAGE@/\" -DLIBDIR=\"$(libdir)/\"
 

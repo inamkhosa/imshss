@@ -4,9 +4,9 @@ h_sources = sh_app.h  sh_avps.h sh_diamretcodes.h sh_msgvalidator.h sh_PUR.h sh_
 
 c_sources = sh_app.c sh_msgvalidator.c sh_PUR.c sh_UDR.c sh_msg_api.c
 
-INCLUDES = -I. -I$(top_srcdir)/src -I$(top_srcdir)/src/oamps_module $(LIBAMPS_DEPS_CFLAGS) $(LIBXML_DEPS_CFLAGS) $(DIAMETER_DEPS_CFLAGS) $(DIAMAPPCOMMON_DEPS_CFLAGS)
+INCLUDES = -I. -I$(top_srcdir)/src -I$(top_srcdir)/src/oamps_module $(DIAMETER_DEPS_CFLAGS) $(DIAMAPPCOMMON_DEPS_CFLAGS) -I$(top_srcdir)/include/amps -I$(top_srcdir)/include/libxml2
 
-LDADD = $(DIAMETER_DEPS_LIBS) $(DIAMAPPCOMMON_DEPS_LIBS) $(LIBXML_DEPS_LIBS)
+LDADD = $(DIAMETER_DEPS_LIBS) $(DIAMAPPCOMMON_DEPS_LIBS) -L$(top_srcdir)/lib -lamps -lxml2
 
 AM_CFLAGS = -DDATADIR=\"$(datadir)/@PACKAGE@/\" -DLIBDIR=\"$(libdir)/\"
 
